@@ -1,9 +1,18 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
 
+from stars.models import Stars
+
+menu = ['О сайте', 'Добавить статью', 'Обратная связь', 'Войти']
+
 
 def index(request):
-    return HttpResponse('Страница приложения stars')
+    posts = Stars.objects.all()
+    return render(request, 'stars/index.html', {'posts': posts, 'menu': menu, 'title': 'Главная страница'})
+
+
+def about(request):
+    return render(request, 'stars/about.html', {'menu': menu, 'title': 'О сайте'})
 
 
 def categories(request, catid):
